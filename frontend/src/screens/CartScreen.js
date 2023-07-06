@@ -21,6 +21,8 @@ function CartScreen() {
   const qty = queryParams ? Number(queryParams.get('qty')) : 1;
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
     if (productId) {
@@ -33,7 +35,11 @@ function CartScreen() {
   };
 
   const checkOutHandler = () => {
-    navigate('/login?redirect=shipping');
+    if (userInfo) {
+      navigate('/shipping');
+    } else {
+      navigate('/login?redirect=shipping');
+    }
   };
 
   return (

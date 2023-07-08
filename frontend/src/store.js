@@ -1,6 +1,10 @@
+//#region PACKAGE IMPORTS
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+//#endregion
+
+//#region COMPONENT IMPORTS
 import {
   productListReducer,
   productDetailsReducer,
@@ -12,6 +16,12 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
 } from './reducers/userReducers';
+import {
+  orderCreateReducer,
+  orderDetailsReducer,
+  orderPayReducer,
+} from './reducers/orderReducers';
+//#endregion
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -21,6 +31,9 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
+  orderPayReducer: orderPayReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')

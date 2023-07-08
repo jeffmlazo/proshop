@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //#region COMPONENT IMPORTS
 import FormContainer from '../components/FormContainer';
 import CheckoutSteps from '../components/CheckoutSteps';
-import { saveShipppingAddress } from '../actions/cartActions';
+import { saveShippingAddress } from '../actions/cartActions';
 //#endregion
 
 function ShippingScreen() {
@@ -23,7 +23,7 @@ function ShippingScreen() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShipppingAddress({ address, city, postalCode, country }));
+    dispatch(saveShippingAddress({ address, city, postalCode, country }));
     navigate('/payment');
   };
 

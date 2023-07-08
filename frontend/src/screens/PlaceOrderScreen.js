@@ -8,12 +8,16 @@ import { useDispatch, useSelector } from 'react-redux';
 //#region COMPONENT IMPORTS
 import Message from '../components/Message';
 import CheckoutSteps from '../components/CheckoutSteps';
-// import { saveShippingAddress } from '../actions/cartActions';
+import { createOrder } from '../actions/orderActions';
+import { ORDER_CREATE_RESET } from '../constants/orderConstants';
 //#endregion
 
 function PlaceOrderScreen() {
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, error, success } = orderCreate;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
-
   cart.itemsPrice = cart.cartItems
     .reduce((acc, item) => acc + item.price * item.qty, 0)
     .toFixed(2);
@@ -25,8 +29,30 @@ function PlaceOrderScreen() {
     Number(cart.taxPrice)
   ).toFixed(2);
 
+  // FIXME: Redirection of payment page is not working when navigating in the browser the "/palce-holder"
+  // if (!cart.paymentMethod) {
+  //   navigate('/payment');
+  // }
+
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`);
+      dispatch({ type: ORDER_CREATE_RESET });
+    }
+  }, [success, navigate, order, dispatch]);
+
   const placeOrderHandler = () => {
-    console.log('Place Order');
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.payment,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
 
   return (
@@ -122,6 +148,10 @@ function PlaceOrderScreen() {
                   <Col>Total: </Col>
                   <Col>${cart.totalPrice}</Col>
                 </Row>
+              </ListGroup.Item>
+
+              <ListGroup.Item>
+                {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
 
               <ListGroup.Item>

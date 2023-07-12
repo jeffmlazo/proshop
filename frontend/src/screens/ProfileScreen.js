@@ -1,13 +1,18 @@
+//#region PACKAGE IMPORTS
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col, Table } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+//#endregion
+
+//#region COMPONENT & REDUX IMPORTS
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
 import { listMyOrders } from '../actions/orderActions';
+//#endregion
 
 function ProfileScreen() {
   const [name, setName] = useState('');
@@ -34,11 +39,11 @@ function ProfileScreen() {
     if (!userInfo) {
       navigate('/login');
     } else {
-      if (!user || !user.name || success) {
+      if (!user || !user.name || success || userInfo._id !== user._id) {
         dispatch({
           type: USER_UPDATE_PROFILE_RESET,
         });
-        dispatch(getUserDetails('profile'));
+        dispatch(getUserDetails(userInfo._id));
         dispatch(listMyOrders());
       } else {
         setName(user.name);
@@ -147,7 +152,11 @@ function ProfileScreen() {
                   <td>${order.total_price}</td>
                   <td>
                     {order.is_paid ? (
-                      order.paid_at === null ? order.paid_at : order.paid_at.substring(0, 10)
+                      order.paid_at === null ? (
+                        order.paid_at
+                      ) : (
+                        order.paid_at.substring(0, 10)
+                      )
                     ) : (
                       <i className="fas fa-times" style={{ color: 'red' }}></i>
                     )}

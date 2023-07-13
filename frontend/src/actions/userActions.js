@@ -276,7 +276,11 @@ export const updateUser = (user) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`/api/users/update/${user._id}`, user, config);
+    const { data } = await axios.put(
+      `/api/users/update/${user._id}`,
+      user,
+      config
+    );
 
     dispatch({
       type: USER_UPDATE_SUCCESS,

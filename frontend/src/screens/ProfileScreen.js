@@ -39,13 +39,16 @@ function ProfileScreen() {
     if (!userInfo) {
       navigate('/login');
     } else {
+      // FIXME: This error appears "You do not have permission to perform this action." When user is not an Admin user
       if (!user || !user.name || success || userInfo._id !== user._id) {
+        console.log('Did not set name')
         dispatch({
           type: USER_UPDATE_PROFILE_RESET,
         });
         dispatch(getUserDetails(userInfo._id));
         dispatch(listMyOrders());
       } else {
+        console.log('Set Name')
         setName(user.name);
         setEmail(user.email);
       }

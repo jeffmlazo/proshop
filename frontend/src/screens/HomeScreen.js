@@ -1,5 +1,5 @@
 //#region PACKAGE IMPORTS
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -10,22 +10,23 @@ import Product from '../components/Product';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Paginate from '../components/Paginate';
+import ProductCarousel from '../components/ProductCarousel';
 import { listProducts } from '../actions/productActions';
 //#endregion
 
 function HomeScreen() {
   const dispatch = useDispatch();
-  const location = useLocation();
+  let keyword = useLocation().search;
   const productList = useSelector((state) => state.productList);
   const { error, loading, products, page, pages } = productList;
 
-  let keyword = location.search;
   useEffect(() => {
     dispatch(listProducts(keyword));
   }, [dispatch, keyword]);
 
   return (
     <div>
+      {!keyword && <ProductCarousel />}
       <div>Latest Products</div>
       {loading ? (
         <Loader />
@@ -40,7 +41,7 @@ function HomeScreen() {
               </Col>
             ))}
           </Row>
-          <Paginate page={page} pages={pages} keyword={keyword}/>
+          <Paginate page={page} pages={pages} />
         </div>
       )}
     </div>

@@ -13,9 +13,10 @@ def getProducts(request):
     query = request.query_params.get('keyword')
     if query == None:
         query = ''
+    itemsPerPage = 2
     products = Product.objects.filter(name__icontains=query)
     page = request.query_params.get('page')
-    paginator = Paginator(products, 2)
+    paginator = Paginator(products, itemsPerPage)
 
     try:
         products = paginator.page(page)
@@ -29,13 +30,33 @@ def getProducts(request):
 
     page = int(page)
 
+    # print('-------------------')
+    # print(products.next_page_number)
+    # print(paginator.count)
+    # print('-------------------')
+ 
+    # 'number': products.number,
+    # 'num_pages': paginator.num_pages,
+    # 'page_range': list(paginator.page_range),
+    # 'has_next': bool(products.has_next),
+    # 'has_previous': bool(products.has_previous),
+    # 'next_page_number': bool(products.next_page_number),
+    # 'previous_page_number': bool(products.previous_page_number),
+
     serializer = ProductSerializer(products, many=True)
     context = {
         'products': serializer.data,
-        'page': page,
+        'page': products.number,
         'pages': paginator.num_pages,
     }
     return Response(context)
+
+@api_view(['GET'])
+def getTopProducts(request):
+    products = Product.objects.filter(rating__gte=4).order_by('-rating')[0:5]
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
+
 
 @api_view(['GET'])
 def getProduct(request, pk):

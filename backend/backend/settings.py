@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure-p519(0me$8)wzww*@x77uq8c(g@k5eb%68z^9(vntl4s(^8evn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -99,6 +99,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -192,7 +193,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "frontend/build/static",
 ]
 
-MEDIA_ROOT = "static/images"
+MEDIA_ROOT = BASE_DIR / "static/images"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -208,5 +210,5 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_IAM_ACCESS_KEY')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_IAM_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_BUCKET_NAME')
 
-# if os.getcwd() == '/app':
-#     DEBUG = False
+if os.getcwd() == '/app':
+    DEBUG = False

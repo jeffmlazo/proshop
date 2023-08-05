@@ -1,6 +1,6 @@
 //#region PACKAGE IMPORTS
 import { Container } from 'react-bootstrap';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 //#endregion
 
 //#region COMPONENT & REDUX IMPORTS
@@ -25,33 +25,34 @@ import OrderListScreen from './screens/OrderListScreen';
 
 function App() {
   return (
-    <>
-      <Router>
-        <Header />
-        <main className="py-3">
-          <Container>
-            <Routes>
-              <Route path="/" element={<HomeScreen />} exact />
-              <Route path="/login" element={<LoginScreen />} />
-              <Route path="/register" element={<RegisterScreen />} />
-              <Route path="/profile" element={<ProfileScreen />} />
-              <Route path="/shipping" element={<ShippingScreen />} />
-              <Route path="/place-order" element={<PlaceOrderScreen />} />
-              <Route path="/order/:id" element={<OrderScreen />} />
-              <Route path="/payment" element={<PaymentScreen />} />
-              <Route path="/product/:id" element={<ProductScreen />} />
-              <Route path="/cart/:id?" element={<CartScreen />} />
-              <Route path="/admin/user-list" element={<UserListScreen />} />
-              <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
-              <Route path="/admin/product-list" element={<ProductListScreen />} />
-              <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
-              <Route path="/admin/order-list" element={<OrderListScreen />} />
-            </Routes>
-          </Container>
-        </main>
-        <Footer />
-      </Router>
-    </>
+    <BrowserRouter>
+      <Header />
+      <main className="py-3">
+        <Container>
+          <Routes>
+            <Route path="/" element={<HomeScreen />} exact />
+            <Route path="/login" element={<LoginScreen />} />
+            <Route path="/register" element={<RegisterScreen />} />
+            <Route path="/profile" element={<ProfileScreen />} />
+            <Route path="/shipping" element={<ShippingScreen />} />
+            <Route path="/place-order" element={<PlaceOrderScreen />} />
+            <Route path="/order/:id" element={<OrderScreen />} />
+            <Route path="/payment" element={<PaymentScreen />} />
+            <Route path="/product/:id" element={<ProductScreen />} />
+            <Route path="/cart/:id?" element={<CartScreen />} />
+            <Route path="/admin/user-list" element={<UserListScreen />} />
+            <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
+            <Route path="/admin/product-list" element={<ProductListScreen />} />
+            <Route
+              path="/admin/product/:id/edit"
+              element={<ProductEditScreen />}
+            />
+            <Route path="/admin/order-list" element={<OrderListScreen />} />
+          </Routes>
+        </Container>
+      </main>
+      <Footer />
+    </BrowserRouter>
   );
 }
 

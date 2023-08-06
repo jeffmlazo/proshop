@@ -30,7 +30,7 @@ function Header() {
       >
         <Container fluid>
           <LinkContainer to="/">
-            <Navbar.Brand href="/">Proshop</Navbar.Brand>
+            <Navbar.Brand href="/">Proshop ProdEdit</Navbar.Brand>
           </LinkContainer>
 
           <Navbar.Toggle aria-controls="navbarScroll" />

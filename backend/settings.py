@@ -157,8 +157,9 @@ DATABASES = {
         "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
         "HOST": os.environ.get('POSTGRES_HOST'),
         # "PORT": os.environ.get('POSTGRES_PORT'),
-        'OPTIONS': {
-            'options': 'endpoint=ep-rough-cell-33014884-pooler',
+        "OPTIONS": {
+            "sslmode" : "require", 
+            "options": 'endpoint=ep-rough-cell-33014884-pooler',
         },
     }
 }

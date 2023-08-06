@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure-p519(0me$8)wzww*@x77uq8c(g@k5eb%68z^9(vntl4s(^8evn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'proshop-heroku-one-c933ae66813f.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'proshop-heroku-one-c933ae66813f.herokuapp.com', '.vercel.app', '.now.sh']
 
 
 # Application definition
@@ -136,11 +136,11 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 DATABASES = {
     # Local database server settings
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-    # Live database server settings
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    # }
+    # Live database server AWS RDS settings
     # "default": {
     #     "ENGINE": "django.db.backends.postgresql",
     #     "NAME": os.environ.get('DB_NAME'),
@@ -149,6 +149,18 @@ DATABASES = {
     #     "HOST": os.environ.get('DB_HOST'),
     #     "PORT": os.environ.get('DB_PORT'),
     # }
+    # Live database server Vercel settings
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get('POSTGRES_DATABASE'),
+        "USER": os.environ.get('POSTGRES_USER'),
+        "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
+        "HOST": os.environ.get('POSTGRES_HOST'),
+        # "PORT": os.environ.get('POSTGRES_PORT'),
+        'OPTIONS': {
+            'options': 'endpoint=ep-rough-cell-33014884-pooler',
+        },
+    }
 }
 
 

@@ -149,7 +149,7 @@ DATABASES = {
     #     "HOST": os.environ.get('DB_HOST'),
     #     "PORT": os.environ.get('DB_PORT'),
     # }
-    # Live database server Vercel setting
+    # Live database server Vercel settings
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ.get('POSTGRES_DATABASE'),

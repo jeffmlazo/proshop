@@ -91,7 +91,6 @@ function ProductEditScreen() {
 
     try {
       const config = {
-        s3Client,
         headers: {
           'Content-Type': 'multipart/form-data',
         },

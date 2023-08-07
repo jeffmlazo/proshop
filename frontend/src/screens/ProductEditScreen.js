@@ -76,7 +76,11 @@ function ProductEditScreen() {
   };
 
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0];
+    // const file = e.target.files[0];
+    // const file = e.target.files[0];
+    let _a;
+    const file =
+      (_a = e.target.files) === null || _a === void 0 ? void 0 : _a[0];
     const formData = new FormData();
 
     formData.append('image', file);
@@ -92,6 +96,7 @@ function ProductEditScreen() {
       };
 
       const { data } = await axios.post(
+        s3Client,
         '/api/products/upload/',
         formData,
         config
@@ -103,6 +108,29 @@ function ProductEditScreen() {
       setUploading(false);
     }
   };
+
+  // const uploadPhoto = async (e) => {
+  //     var _a;
+  //     const file = (_a = e.target.files) === null || _a === void 0 ? void 0 : _a[0];
+  //     const filename = encodeURIComponent(file.name);
+  //     const fileType = encodeURIComponent(file.type);
+  //     const res = await fetch(`/api/upload-url?file=${filename}&fileType=${fileType}`);
+  //     const { url, fields } = await res.json();
+  //     const formData = new FormData();
+  //     Object.entries(Object.assign(Object.assign({}, fields), { file })).forEach(([key, value]) => {
+  //         formData.append(key, value);
+  //     });
+  //     const upload = await fetch(url, {
+  //         method: "POST",
+  //         body: formData
+  //     });
+  //     if (upload.ok) {
+  //         console.log("Uploaded successfully!");
+  //     }
+  //     else {
+  //         console.error("Upload failed.");
+  //     }
+  // };
 
   // const uploadCommand = new PutObjectCommand({
 

@@ -27,8 +27,6 @@ function ProductEditScreen() {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
   const [uploading, setUploading] = useState(false);
-  // The credentials are read from the environment automatically
-  const s3Client = new S3Client({});
 
   const productDetails = useSelector((state) => state.productDetails);
   const { error, loading, product } = productDetails;
@@ -87,16 +85,18 @@ function ProductEditScreen() {
     formData.append('product_id', productId);
 
     setUploading(true);
+    // The credentials are read from the environment automatically
+    const s3Client = new S3Client({});
 
     try {
       const config = {
+        s3Client,
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       };
 
       const { data } = await axios.post(
-        s3Client,
         '/api/products/upload/',
         formData,
         config

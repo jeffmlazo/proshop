@@ -87,6 +87,7 @@ function ProductEditScreen() {
     setUploading(true);
     // The credentials are read from the environment automatically
     const s3Client = new S3Client({});
+    console(s3Client);
 
     try {
       const config = {

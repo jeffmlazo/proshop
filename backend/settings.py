@@ -208,8 +208,7 @@ STATIC_URL = "static/"
 # Needed this join format for Vercel host
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles", "static")
 
-# MEDIA_URL = "images/"
-MEDIA_URLS = "/images/"
+MEDIA_URL = "images/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 # MEDIA_ROOT = BASE_DIR / "static/images"
 

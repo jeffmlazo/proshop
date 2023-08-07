@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 //#endregion
 
 //#region COMPONENT & REDUX IMPORTS
@@ -26,6 +27,8 @@ function ProductEditScreen() {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
   const [uploading, setUploading] = useState(false);
+  // The credentials are read from the environment automatically
+  const s3Client = new S3Client({});
 
   const productDetails = useSelector((state) => state.productDetails);
   const { error, loading, product } = productDetails;
@@ -84,19 +87,32 @@ function ProductEditScreen() {
     try {
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      }
+          'Content-Type': 'multipart/form-data',
+        },
+      };
 
-      const {data} = await axios.post('/api/products/upload/', formData, config);
+      const { data } = await axios.post(
+        '/api/products/upload/',
+        formData,
+        config
+      );
 
       setImage(data);
       setUploading(false);
-
     } catch (error) {
       setUploading(false);
     }
   };
+
+  // const uploadCommand = new PutObjectCommand({
+
+  //   Bucket: process.env.AWS_S3_BUCKET_NAME,
+
+  //   Key: 'file-name',
+
+  //   Body: 'file-body',
+
+  // });
 
   return (
     <>
@@ -145,7 +161,7 @@ function ProductEditScreen() {
                 label="Choose File"
                 onChange={uploadFileHandler}
               ></Form.Control>
-              
+
               {uploading && <Loader />}
             </Form.Group>
 

@@ -27,6 +27,9 @@ function ProductEditScreen() {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
   const [uploading, setUploading] = useState(false);
+  // The credentials are read from the environment automatically
+  const s3Client = new S3Client({});
+  console.log('S3CLIENT= ', s3Client);
 
   const productDetails = useSelector((state) => state.productDetails);
   const { error, loading, product } = productDetails;
@@ -85,9 +88,6 @@ function ProductEditScreen() {
     formData.append('product_id', productId);
 
     setUploading(true);
-    // The credentials are read from the environment automatically
-    const s3Client = new S3Client({});
-    console(s3Client);
 
     try {
       const config = {

@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 //#endregion
 
 //#region COMPONENT & REDUX IMPORTS
@@ -27,9 +26,6 @@ function ProductEditScreen() {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
   const [uploading, setUploading] = useState(false);
-  // The credentials are read from the environment automatically
-  const s3Client = new S3Client({});
-  console.log('S3CLIENT= ', s3Client);
 
   const productDetails = useSelector((state) => state.productDetails);
   const { error, loading, product } = productDetails;
@@ -77,8 +73,6 @@ function ProductEditScreen() {
   };
 
   const uploadFileHandler = async (e) => {
-    // const file = e.target.files[0];
-    // const file = e.target.files[0];
     let _a;
     const file =
       (_a = e.target.files) === null || _a === void 0 ? void 0 : _a[0];
@@ -108,39 +102,6 @@ function ProductEditScreen() {
       setUploading(false);
     }
   };
-
-  // const uploadPhoto = async (e) => {
-  //     var _a;
-  //     const file = (_a = e.target.files) === null || _a === void 0 ? void 0 : _a[0];
-  //     const filename = encodeURIComponent(file.name);
-  //     const fileType = encodeURIComponent(file.type);
-  //     const res = await fetch(`/api/upload-url?file=${filename}&fileType=${fileType}`);
-  //     const { url, fields } = await res.json();
-  //     const formData = new FormData();
-  //     Object.entries(Object.assign(Object.assign({}, fields), { file })).forEach(([key, value]) => {
-  //         formData.append(key, value);
-  //     });
-  //     const upload = await fetch(url, {
-  //         method: "POST",
-  //         body: formData
-  //     });
-  //     if (upload.ok) {
-  //         console.log("Uploaded successfully!");
-  //     }
-  //     else {
-  //         console.error("Upload failed.");
-  //     }
-  // };
-
-  // const uploadCommand = new PutObjectCommand({
-
-  //   Bucket: process.env.AWS_S3_BUCKET_NAME,
-
-  //   Key: 'file-name',
-
-  //   Body: 'file-body',
-
-  // });
 
   return (
     <>

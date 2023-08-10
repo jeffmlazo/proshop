@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure-p519(0me$8)wzww*@x77uq8c(g@k5eb%68z^9(vntl4s(^8evn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'proshop-heroku-one-c933ae66813f.herokuapp.com', '.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'proshop-heroku-one-c933ae66813f.herokuapp.com']
 
 
 # Application definition
@@ -149,21 +149,16 @@ DATABASES = {
     #     "HOST": os.environ.get('DB_HOST'),
     #     "PORT": os.environ.get('DB_PORT'),
     # }
-    # Live database server Vercel settings
+    # Live database server RENDER settings
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get('POSTGRES_DATABASE'),
-        "USER": os.environ.get('POSTGRES_USER'),
-        "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
-        "HOST": os.environ.get('POSTGRES_HOST'),
-        # "PORT": os.environ.get('POSTGRES_PORT'),
-        "OPTIONS": {
-            "sslmode" : "require", 
-            "options": 'endpoint=ep-rough-cell-33014884-pooler',
-        },
+        "NAME": os.environ.get('RENDER_POSTGRES_DATABASE'),
+        "USER": os.environ.get('RENDER_POSTGRES_USER'),
+        "PASSWORD": os.environ.get('RENDER_POSTGRES_PASSWORD'),
+        "HOST": os.environ.get('RENDER_POSTGRES_HOST'),
+        "PORT": os.environ.get('RENDER_POSTGRES_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -204,13 +199,11 @@ STATICFILES_DIRS = [
     BASE_DIR / "frontend/build/static",
 ]
 
-STATIC_URL = "static/"
-# Needed this join format for Vercel host
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles", "static")
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-MEDIA_URL = "images/"
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
-# MEDIA_ROOT = BASE_DIR / "static/images"
+MEDIA_URL = "/images/"
+MEDIA_ROOT = BASE_DIR / 'static/images'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -225,12 +218,6 @@ AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_IAM_ACCESS_KEY')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_IAM_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_BUCKET_NAME')
-
-AWS_S3_SIGNATURE_NAME = 's3v4',
-AWS_S3_REGION_NAME = 'ap-northeast-1'
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL =  None
-AWS_S3_VERITY = True
 
 if os.getcwd() == '/app':
     DEBUG = False
